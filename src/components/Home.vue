@@ -1,17 +1,22 @@
 <template>
-  <div id="home-container">
-  	<div>
-	  <h1 id="name">{{ name }}</h1>
-	  <h4>{{ msg }}</h4>
-	</div>
-	<div>
-	  <p>
-	    <span v-for="link in links">
-	   		<a class="home-link" target="_blank" :href=link.url><i :class=link.icon></i></a> 
-	    </span>
-      </p>
-	</div>
-  </div>
+  <transition 
+	appear 
+	appear-class="slide"
+	appear-to-class="slide-to">
+	  <div id="home-container">
+		<div>
+			<h1 id="name">{{ name }}</h1>
+	  		<h4>{{ msg }}</h4>
+		</div>
+		<div>
+		  <p>
+			<span v-for="link in links">
+			  <a class="home-link" target="_blank" :href=link.url><i :class=link.icon></i></a> 
+			</span>
+		  </p>
+	    </div>
+	  </div>
+  </transition>
 </template>
 
 <script>
@@ -49,4 +54,13 @@ export default {
 .home-link{
   color:black !important;
 }
+
+.slide {
+  transform: translateX(-10px);
+  opacity: 0;
+}
+.slide-to {
+  transition: all .3s ease;
+}
+
 </style>
