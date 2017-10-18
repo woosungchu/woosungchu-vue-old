@@ -1,29 +1,24 @@
 <template>
-  <transition 
-	appear 
-	v-on:before-appear="beforeAppear"
-  	v-on:appear="appear"
-  	v-on:after-appear="afterAppear"
-  	v-on:appear-cancelled="cancelAppear">
-	  <div id="home-container">
-		<div>
-			<h1 id="name">{{ name }}</h1>
-	  		<h4 id="msg">{{ msg }}</h4>
-		</div>
-		<div>
-		  <p id="links-group">
-			<span v-for="link in links">
-			  <a class="home-link" target="_blank" :href=link.url><i :class=link.icon></i></a> 
-			</span>
-		  </p>
-	    </div>
-	  </div>
-  </transition>
+<div>
+  <div id="home-container">
+
+  	<div>
+  		<h1 id="name">{{ name }}</h1>
+  		<h4 id="msg">{{ msg }}</h4>
+  	</div>
+
+  	<div>
+  	  <p id="links-group">
+    		<span v-for="link in links">
+    		  <a class="home-link" target="_blank" :href=link.url><i :class=link.icon></i></a>
+    		</span>
+    	  </p>
+      </div>
+  </div>
+</div>
 </template>
 
 <script>
-import Velocity from 'velocity-animate'
-
 export default {
   name: 'home',
   data () {
@@ -38,33 +33,20 @@ export default {
     }
   },
   methods: {
-    beforeAppear: function (el) {
-      el.querySelector('#name').style.opacity = 0
-      el.querySelector('#msg').style.opacity = 0
-      el.querySelector('#links-group').style.opacity = 0
-    },
-    appear: function (el, done) {
-      var name = el.querySelector('#name'),
-	      msg = el.querySelector('#msg'),
-	      linksGroup = el.querySelector('#links-group');
-      
-      Velocity(name, { opacity: 1, }, { delay: 100 })
-      Velocity(msg, { opacity: 1 }, { delay: 300})
-      Velocity(linksGroup, { opacity: 1 }, { delay: 600})
-      Velocity(el, { fontSize: '1em' }, { delay: 800, complete: done })
-    },
-    afterAppear: function (el, done) {
-    /*
-      Velocity(el, { rotateZ: '50deg' }, { duration: 600 })
-      Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
-      Velocity(el, {
-        rotateZ: '45deg',
-        opacity: 0
-      }, { complete: done })
-    */
-    },
-    cancelAppear: function(){}
+  },
+  mounted(){
+    var container = document.getElementById("home-container"),
+        cnt = 1, limit = 100;
+    var a = setInterval(function(){
+      if(cnt > limit){
+        clearInterval(a);
+      }else{
+        container.style.opacity = cnt / limit;
+        cnt += 1;
+      }
+    },3);
   }
+  
 }
 </script>
 
@@ -72,6 +54,7 @@ export default {
 #home-container{
   letter-spacing: 16px;
   padding-top:20%;
+  opacity: 0;
 }
 
 #home-container * {
